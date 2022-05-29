@@ -61,22 +61,19 @@ ess <- ess %>%
                      dates,
                      by = c('name', 'cntry', 'idno'))
 
+ess <- ess %>% 
+  filter(!is.na(start_date))
 
 ess <- ess %>% 
-  #mutate(date = yday(start_date))
-  mutate(date = as.Date(start_date)) %>% 
-  mutate(date = format(date, format="%m-%d"))
-
-ess <- ess %>% 
-  #mutate(t = as.character(date)) %>% 
-  mutate(t = lubridate::mday(t))
-
-
-ess <- ess %>% 
-  mutate(x = format(as.Date(start_date, "%m-%d-%y"), "%m-%d"))
+  mutate(date = format(start_date, format="%m-%d")) %>% 
+  mutate(date = as.character(date)) %>% 
+  mutate(date = paste('2000', date, sep = '-')) %>% 
+  mutate(date = ymd(date))
+  
 
 ess %>% 
-  ggplot(., aes(x = x)) +
+  ggplot(., aes(x = date)) +
   geom_density() +
-  #scale_x_date() +
+  scale_x_date(date_breaks = "2 months",
+               date_labels = "%b") +
   facet_wrap(~ name)

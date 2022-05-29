@@ -301,6 +301,16 @@ df_ <- bind_rows(ess_1,
                  ess_8,
                  ess_9)
 
+rm(ess_1,
+   ess_2,
+   ess_3,
+   ess_4,
+   ess_5,
+   ess_6,
+   ess_7,
+   ess_8,
+   ess_9)
+
 ess <- df_
 
 ess <- ess %>% 

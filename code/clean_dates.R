@@ -316,7 +316,6 @@ ess <- df_
 ess <- ess %>% 
   select(names(temp))
 
-
 ess <- ess %>% 
   filter(!is.na(start_of_interview_year),
          !is.na(start_of_interview_month),
@@ -350,4 +349,8 @@ ess <- ess %>%
 ess <- ess %>% 
   mutate(across(ends_with('_date'),
                 ~ lubridate::ymd(.x),
-                .names = "{.col}_new"))
+                .names = "{.col}_ymd"))
+
+t <- ess %>% 
+  filter(!is.na(start_date_new))
+rm(t)

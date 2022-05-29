@@ -80,3 +80,15 @@ ess %>%
 
 ggsave(plot = last_plot(),
        filename = 'output/date_distribution_density.png')
+
+
+
+ess %>% 
+  ggplot(., aes(x = date)) +
+  geom_histogram() +
+  scale_x_date(date_breaks = '2 months',
+               date_labels = '%b') +
+  facet_wrap(~ name)
+
+ggsave(plot = last_plot(),
+       filename = 'output/date_distribution_histogram.png')

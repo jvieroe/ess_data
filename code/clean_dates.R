@@ -382,3 +382,11 @@ glimpse(ess)
 # ----- Save to data folder
 saveRDS(ess,
         "data/ess_dates.rds")
+
+rm(ess,
+   ess_list,
+   temp,
+   ess_path,
+   files,
+   j,
+   path)

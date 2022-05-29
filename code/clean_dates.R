@@ -351,6 +351,22 @@ ess <- ess %>%
                 ~ lubridate::ymd(.x),
                 .names = "{.col}_ymd"))
 
+ess <- ess %>% 
+  mutate(across(ends_with('_full'),
+                ~ lubridate::ymd_hm(.x),
+                .names = "{.col}_ymdhm"))
+
+
+
 t <- ess %>% 
-  filter(!is.na(start_date_new))
+  filter(is.na(start_full_ymdhm))
 rm(t)
+
+ess <- ess %>% 
+  select(cntry, idno,
+         start_date = start_date_ymd,
+         end_date = end_date_ymd,
+         start_full = start_full_ymdhm,
+         end_full = end_full_ymdhm)
+
+glimpse(ess)

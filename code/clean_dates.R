@@ -305,5 +305,31 @@ ess <- ess %>%
   select(names(temp))
 
 
-ess <- ess
+ess <- ess %>% 
+  filter(!is.na(start_of_interview_year),
+         !is.na(start_of_interview_month),
+         !is.na(start_of_interview_day_of_month))
 
+ess <- ess %>% 
+  mutate(start_date = paste(start_of_interview_year,
+                            start_of_interview_month,
+                            start_of_interview_day_of_month,
+                            sep = '-')) %>% 
+  mutate(end_date = paste(end_of_interview_year,
+                          end_of_interview_month,
+                          end_of_interview_day_of_month,
+                          sep = '-'))
+
+ess <- ess %>% 
+  mutate(start_time = paste(start_of_interview_hour,
+                            start_of_interview_minute,
+                            sep = ':')) %>% 
+  mutate(end_time = paste(end_of_interview_hour,
+                          end_of_interview_minute,
+                          sep = ':'))
+
+ess <- ess %>% 
+  mutate(start_full = paste(start_date, start_time,
+                            sep = ' ')) %>% 
+  mutate(end_full = paste(end_date, end_time,
+                          sep = ' '))

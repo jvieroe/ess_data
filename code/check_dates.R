@@ -64,10 +64,19 @@ ess <- ess %>%
 
 ess <- ess %>% 
   #mutate(date = yday(start_date))
-  mutate(date = format(start_date, format="%m/%d"))
+  mutate(date = as.Date(start_date)) %>% 
+  mutate(date = format(date, format="%m-%d"))
+
+ess <- ess %>% 
+  #mutate(t = as.character(date)) %>% 
+  mutate(t = lubridate::mday(t))
+
+
+ess <- ess %>% 
+  mutate(x = format(as.Date(start_date, "%m-%d-%y"), "%m-%d"))
 
 ess %>% 
-  ggplot(., aes(x = date)) +
+  ggplot(., aes(x = x)) +
   geom_density() +
   #scale_x_date() +
   facet_wrap(~ name)

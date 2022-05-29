@@ -314,7 +314,8 @@ rm(ess_1,
 ess <- df_
 
 ess <- ess %>% 
-  select(names(temp))
+  select('name',
+         names(temp))
 
 ess <- ess %>% 
   filter(!is.na(start_of_interview_year),
@@ -363,7 +364,7 @@ t <- ess %>%
 rm(t)
 
 ess <- ess %>% 
-  select(cntry, idno,
+  select(name, cntry, idno,
          start_date = start_date_ymd,
          end_date = end_date_ymd,
          start_full = start_full_ymdhm,

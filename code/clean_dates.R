@@ -31,6 +31,7 @@ for (j in seq_along(files)) {
   var_label(data$idno) <- NULL
   
   ess_list[[j]] <- data
+  rm(data)
   
 }
 
@@ -78,7 +79,9 @@ ess_1 <- ess_1 %>%
                      by = c("cntry", "idno")) %>% 
   select(-c(inwyr, inwmm, inwdd,
             inwshh, inwsmm,
-            inwehh, inwemm))
+            inwehh, inwemm)) %>% 
+  select('name',
+         names(temp))
 
 
 # -----------------------------------------------------------------------------
@@ -122,7 +125,9 @@ ess_2 <- ess_2 %>%
                      by = c("cntry", "idno")) %>% 
   select(-c(inwyr, inwmm, inwdd,
             inwshh, inwsmm,
-            inwehh, inwemm))
+            inwehh, inwemm)) %>% 
+  select('name',
+         names(temp))
 
 
 # -----------------------------------------------------------------------------
@@ -145,7 +150,9 @@ ess_3 <- ess_3 %>%
                      temp,
                      by = c("cntry", "idno")) %>% 
   select(-c(inwyys, inwmms, inwdds, inwshh, inwsmm,
-            inwyye, inwmme, inwdde, inwehh, inwemm))
+            inwyye, inwmme, inwdde, inwehh, inwemm)) %>% 
+  select('name',
+         names(temp))
 
 
 # -----------------------------------------------------------------------------
@@ -168,7 +175,9 @@ ess_4 <- ess_4 %>%
                      temp,
                      by = c("cntry", "idno")) %>% 
   select(-c(inwyys, inwmms, inwdds, inwshh, inwsmm,
-            inwyye, inwmme, inwdde, inwehh, inwemm))
+            inwyye, inwmme, inwdde, inwehh, inwemm)) %>% 
+  select('name',
+         names(temp))
 
 
 # -----------------------------------------------------------------------------
@@ -191,7 +200,9 @@ ess_5 <- ess_5 %>%
                      temp,
                      by = c("cntry", "idno")) %>% 
   select(-c(inwyys, inwmms, inwdds, inwshh, inwsmm,
-            inwyye, inwmme, inwdde, inwehh, inwemm))
+            inwyye, inwmme, inwdde, inwehh, inwemm)) %>% 
+  select('name',
+         names(temp))
 
 
 # -----------------------------------------------------------------------------
@@ -214,7 +225,9 @@ ess_6 <- ess_6 %>%
                      temp,
                      by = c("cntry", "idno")) %>% 
   select(-c(inwyys, inwmms, inwdds, inwshh, inwsmm,
-            inwyye, inwmme, inwdde, inwehh, inwemm))
+            inwyye, inwmme, inwdde, inwehh, inwemm)) %>% 
+  select('name',
+         names(temp))
 
 
 # -----------------------------------------------------------------------------
@@ -237,7 +250,9 @@ ess_7 <- ess_7 %>%
                      temp,
                      by = c("cntry", "idno")) %>% 
   select(-c(inwyys, inwmms, inwdds, inwshh, inwsmm,
-            inwyye, inwmme, inwdde, inwehh, inwemm))
+            inwyye, inwmme, inwdde, inwehh, inwemm)) %>% 
+  select('name',
+         names(temp))
 
 
 # -----------------------------------------------------------------------------
@@ -260,7 +275,9 @@ ess_8 <- ess_8 %>%
                      temp,
                      by = c("cntry", "idno")) %>% 
   select(-c(inwyys, inwmms, inwdds, inwshh, inwsmm,
-            inwyye, inwmme, inwdde, inwehh, inwemm))
+            inwyye, inwmme, inwdde, inwehh, inwemm)) %>% 
+  select('name',
+         names(temp))
 
 
 # -----------------------------------------------------------------------------
@@ -283,15 +300,14 @@ ess_9 <- ess_9 %>%
                      temp,
                      by = c("cntry", "idno")) %>% 
   select(-c(inwyys, inwmms, inwdds, inwshh, inwsmm,
-            inwyye, inwmme, inwdde, inwehh, inwemm))
-
-
-
+            inwyye, inwmme, inwdde, inwehh, inwemm)) %>% 
+  select('name',
+         names(temp))
 
 # -----------------------------------------------------------------------------
 # Append data
 # -----------------------------------------------------------------------------
-df_ <- bind_rows(ess_1,
+ess <- bind_rows(ess_1,
                  ess_2,
                  ess_3,
                  ess_4,
@@ -311,11 +327,6 @@ rm(ess_1,
    ess_8,
    ess_9)
 
-ess <- df_
-
-ess <- ess %>% 
-  select('name',
-         names(temp))
 
 ess <- ess %>% 
   filter(!is.na(start_of_interview_year),
@@ -358,11 +369,6 @@ ess <- ess %>%
                 .names = "{.col}_ymdhm"))
 
 
-
-t <- ess %>% 
-  filter(is.na(start_full_ymdhm))
-rm(t)
-
 ess <- ess %>% 
   select(name, cntry, idno,
          start_date = start_date_ymd,
@@ -371,3 +377,8 @@ ess <- ess %>%
          end_full = end_full_ymdhm)
 
 glimpse(ess)
+
+
+# ----- Save to data folder
+saveRDS(ess,
+        "data/ess_dates.rds")

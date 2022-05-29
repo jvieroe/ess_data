@@ -1,7 +1,7 @@
 rm(list = ls())
 
-ess_path <- 'data/ess_data'
-
+ess_path <- '/Users/jeppeviero/Library/Mobile Documents/com~apple~CloudDocs/Data/ESS/ess_data'
+ess_path
 
 
 files <- list.files(ess_path)

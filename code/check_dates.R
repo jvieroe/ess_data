@@ -64,6 +64,12 @@ ess <- ess %>%
 ess <- ess %>% 
   filter(!is.na(start_date))
 
+
+
+# -----------------------------------------------------------------------------
+# Plot data
+# -----------------------------------------------------------------------------
+
 ess <- ess %>% 
   mutate(date = format(start_date, format="%m-%d")) %>% 
   mutate(date = as.character(date)) %>% 
@@ -71,6 +77,7 @@ ess <- ess %>%
   mutate(date = ymd(date))
   
 
+# ----- Density plot
 ess %>% 
   ggplot(., aes(x = date)) +
   geom_density() +
@@ -83,6 +90,7 @@ ggsave(plot = last_plot(),
 
 
 
+# ----- Histogram
 ess %>% 
   ggplot(., aes(x = date)) +
   geom_histogram() +

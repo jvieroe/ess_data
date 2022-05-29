@@ -1,10 +1,14 @@
-rm(list = ls())
+library(tidyverse)
+library(haven)
+library(janitor)
+library(lubridate)
+library(labelled)
+library(sjlabelled)
 
-ess_path <- '/Users/jeppeviero/Library/Mobile Documents/com~apple~CloudDocs/Data/ESS/ess_data'
-ess_path
-
+ess_path <- 'data/ess_data/'
 
 files <- list.files(ess_path)
+files
 
 ess_list <- list()
 
@@ -12,10 +16,13 @@ ess_list <- list()
 for (j in seq_along(files)) {
   
   path <- files[j]
-  path <- paste("data/ess_data/", path, sep = "")
+  path <- paste(ess_path, path, sep = "")
   print(path)
   
+  # read data
   data <- read_dta(path, encoding = "latin1")
+  
+  # remove labels from ID variables
   var_label(data$cntry) <- NULL
   var_label(data$idno) <- NULL
   

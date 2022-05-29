@@ -291,7 +291,7 @@ ess_9 <- ess_9 %>%
 # -----------------------------------------------------------------------------
 # Append data
 # -----------------------------------------------------------------------------
-ess <- bind_rows(ess_1,
+df_ <- bind_rows(ess_1,
                  ess_2,
                  ess_3,
                  ess_4,
@@ -300,6 +300,8 @@ ess <- bind_rows(ess_1,
                  ess_7,
                  ess_8,
                  ess_9)
+
+ess <- df_
 
 ess <- ess %>% 
   select(names(temp))
@@ -333,3 +335,9 @@ ess <- ess %>%
                             sep = ' ')) %>% 
   mutate(end_full = paste(end_date, end_time,
                           sep = ' '))
+
+
+ess <- ess %>% 
+  mutate(across(ends_with('_date'),
+                ~ lubridate::ymd(.x),
+                .names = "{.col}_new"))
